@@ -1,4 +1,2 @@
-pub struct Transaction {
-    pub address: String,
-    pub amount: f64
-}
+pub mod blockchain;
+pub mod time;
