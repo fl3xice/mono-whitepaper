@@ -1,7 +1,7 @@
 use clap::Parser;
 use env_logger::{Builder, Target};
 use log::{LevelFilter, info};
-use std::net::SocketAddrV4;
+use std::{net::{SocketAddrV4, Ipv4Addr, TcpStream}, io::{Write, Read}};
 
 #[derive(Parser, Debug)]
 #[clap(author = "flexice", version, about, long_about = None)]
@@ -25,6 +25,9 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
+    // So far the first default host on localhost:3697
+    let mut node = SocketAddrV4::new(Ipv4Addr::new(127, 0, 0, 1), 3697);
+    
     if args.verbose {
         Builder::new()
             .filter_level(LevelFilter::Debug)
@@ -34,7 +37,22 @@ fn main() {
         Builder::new().target(Target::Stdout).init();
     }
 
+    
+    
     if args.ctan.is_some() {
         info!("Connecting to {}", args.ctan.unwrap());
+        node = args.ctan.unwrap();
     }
+
+    // Connection create
+    let mut stream = TcpStream::connect(node).unwrap();
+
+    // Send data to node
+    stream.write_all(b"INIT").unwrap();
+
+    // Receive data from node
+    let mut buffer = [0; 4096];
+    stream.read(&mut buffer).unwrap();
+   
+    println!("{}", String::from_utf8_lossy(&buffer[..]));
 }
