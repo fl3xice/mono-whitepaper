@@ -7,8 +7,8 @@ read option
 
 if [ $option = "d" ]; then
     echo "Building Debug..."
-    cargo build --bin cli
+    cargo build --bin mono-cli
 else
     echo "Building Release..."
-    cargo build --release --bin cli
+    cargo build --release --bin mono-cli
 fi

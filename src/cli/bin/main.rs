@@ -1,15 +1,15 @@
 use clap::Parser;
 use env_logger::{Builder, Target};
-use log::LevelFilter;
+use log::{LevelFilter, info};
 use std::net::SocketAddrV4;
 
 #[derive(Parser, Debug)]
 #[clap(author = "flexice", version, about, long_about = None)]
 struct Args {
-    #[clap(long)]
-    connect_to_another_server: Option<SocketAddrV4>,
+    #[clap(long, help = "Choose another node to connect")]
+    ctan: Option<SocketAddrV4>,
 
-    #[clap(long, parse(try_from_str), default_value = "false")]
+    #[clap(long)]
     verbose: bool,
 }
 
@@ -32,5 +32,9 @@ fn main() {
             .init();
     } else {
         Builder::new().target(Target::Stdout).init();
+    }
+
+    if args.ctan.is_some() {
+        info!("Connecting to {}", args.ctan.unwrap());
     }
 }
