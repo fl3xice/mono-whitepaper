@@ -1,4 +1,5 @@
 pub struct Transaction {
+    pub index: u64,
     pub address: String,
     pub from: String,
     pub amount: f64,

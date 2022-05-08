@@ -4,7 +4,7 @@ use std::net::TcpListener;
 use std::thread;
 
 pub const BUFFER_SIZE: usize = 4096;
-pub const END_CHAR: u8 = 0xE2; // ≃
+pub const END_CHAR: [u8; 3] = [0xE2, 0x89, 0x83]; // ≃
 
 pub struct Network {
     address: SocketAddrV4,
@@ -22,7 +22,7 @@ impl Network {
         for stream in listener.incoming() {
             thread::spawn(move || {
                 let mut stream = stream.unwrap();
-                let mut buffer = [0; BUFFER_SIZE]; 
+                let mut buffer = [0; BUFFER_SIZE];
 
                 // Read input data from stream
                 stream.read(&mut buffer).unwrap();
