@@ -1,6 +1,6 @@
 use mono_api::network::Network;
-use std::{env, thread};
 use std::net::{Ipv4Addr, SocketAddrV4};
+use std::{env, thread};
 
 fn main() {
     let args = env::args().collect::<Vec<_>>();
@@ -14,7 +14,7 @@ fn main() {
     }
 
     let network: Network = Network::new(node);
-    thread::spawn(move || { network.listen() });
+    thread::spawn(move || network.listen());
     println!("Listening on {:?}", node);
     thread::park();
 }

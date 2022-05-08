@@ -12,6 +12,7 @@ pub struct Network {
 
 impl Network {
     pub fn new(address: SocketAddrV4) -> Self {
+        
         Self { address }
     }
 
@@ -26,6 +27,9 @@ impl Network {
 
                 // Read input data from stream
                 stream.read(&mut buffer).unwrap();
+
+                // Print input data
+                println!("{}", String::from_utf8_lossy(&buffer[..]));
             });
         }
     }

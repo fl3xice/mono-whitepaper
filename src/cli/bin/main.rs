@@ -2,7 +2,7 @@ use clap::Parser;
 use env_logger::{Builder, Target};
 use log::{info, LevelFilter};
 use std::{
-    io::Read,
+    io::{Read, Write},
     net::{Ipv4Addr, SocketAddrV4, TcpStream},
 };
 
@@ -45,10 +45,20 @@ fn main() {
         node = args.ctan.unwrap();
     }
 
-    // Connection create
-    let mut stream = TcpStream::connect(node).unwrap();
+    loop {
+        let mut stream = TcpStream::connect(node).unwrap();
+        
+        // buffer for write
+        let mut buffer_w = String::new();
+        buffer_w += "Привет";
+        stream.write(buffer_w.as_bytes()).unwrap();
 
-    // Receive data from node
-    let mut buffer = [0; 4096];
-    stream.read(&mut buffer).unwrap();
+        // buffer for read
+        let mut buffer_r = [0; 4096];
+
+        stream.read(&mut buffer_r).unwrap();
+
+        // Print received data
+        println!("{}", String::from_utf8_lossy(&buffer_r[..]));
+    }
 }

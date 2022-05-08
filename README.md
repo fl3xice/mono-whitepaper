@@ -1,6 +1,6 @@
 # Mono
 
-It's a decentralized crypto currency, main of a blockchain.
+Cryptocurrency
 
 # Mono Network
 
