@@ -1,4 +1,6 @@
+use std::fs::File;
 use std::io::Read;
+use std::io::Write;
 use std::net::SocketAddrV4;
 use std::net::TcpListener;
 use std::thread;
@@ -12,7 +14,6 @@ pub struct Network {
 
 impl Network {
     pub fn new(address: SocketAddrV4) -> Self {
-        
         Self { address }
     }
 

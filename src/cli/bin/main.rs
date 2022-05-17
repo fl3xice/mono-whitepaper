@@ -45,20 +45,18 @@ fn main() {
         node = args.ctan.unwrap();
     }
 
-    loop {
-        let mut stream = TcpStream::connect(node).unwrap();
-        
-        // buffer for write
-        let mut buffer_w = String::new();
-        buffer_w += "Привет";
-        stream.write(buffer_w.as_bytes()).unwrap();
+    let mut stream = TcpStream::connect(node).unwrap();
 
-        // buffer for read
-        let mut buffer_r = [0; 4096];
+    // buffer for write
+    let mut buffer_w = String::new();
 
-        stream.read(&mut buffer_r).unwrap();
+    stream.write(buffer_w.as_bytes()).unwrap();
 
-        // Print received data
-        println!("{}", String::from_utf8_lossy(&buffer_r[..]));
-    }
+    // buffer for read
+    let mut buffer_r = [0; 4096];
+
+    stream.read(&mut buffer_r).unwrap();
+
+    // Print received data
+    println!("{}", String::from_utf8_lossy(&buffer_r[..]));
 }
